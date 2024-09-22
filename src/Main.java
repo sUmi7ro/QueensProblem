@@ -2,10 +2,11 @@ public class Main {
     public static void main(String[] args) {
         //Length and width of the board (lxl)
         int l = 8;
+        int[] board = new int[l];
 
         //Index will be the x-cord and the value in arr[x-cord] will be the y-cord
         //board[row] = col is enough information to know where it was placed
-        placeQueen(createArr(l), 0);
+        placeQueen(board, 0);
   }
 
     public static void placeQueen(int[] board, int row){
@@ -28,14 +29,6 @@ public class Main {
                 return;
             }
         }
-    }
-
-    public static int[] createArr ( int length){
-        int[] arr = new int[length];
-        for (int i = 0; i < length; i++) {
-            arr[i] = i + 1;
-        }
-        return arr;
     }
 
     public static boolean posAvailable(int col, int row, int[] board){
