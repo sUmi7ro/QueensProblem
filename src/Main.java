@@ -20,24 +20,24 @@ public class Main {
         //Loop through the row
         for (int col=0; col < board.length; col++){
 
-            //Sjekk om alle ligger lovlig posisjoner og gå ut hvis ikke
+            //Check for the first legal position
             if(posAvailable(col, row, board)){
-                //Send to console
+                //Update board
                 board[row] = col;
-                //Recursive call
+                //Recursive call  (go to next row)
                 placeQueen(board, row+1);
-                return;
             }
         }
     }
 
-    public static boolean posAvailable(int col, int row, int[] board){
+    public static boolean posAvailable(int checkCol, int checkRow, int[] board){
 
-        //We dont't need to check y cords since we always switch row when we place a queen.
+        int dif = checkRow-board.length;
+        //We dont't need to check horizontally since we always switch row when we place a queen.
         for (int i = 0; i < board.length; i++) {
             //Find formula
-            boolean vertical = false;
-            boolean diagonal = false;
+            boolean vertical = checkRow == i-x;
+            boolean diagonal = checkCol == board[i]-x && checkRow == i-x;
             if(diagonal && vertical) return true;
         }
         return false;
