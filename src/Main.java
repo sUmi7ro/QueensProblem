@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
         //Length and width of the board (lxl)
@@ -12,7 +14,7 @@ public class Main {
     public static void placeQueen(int[] board, int row){
         //Base case
         if(board.length == row){
-            printBoard();
+            printBoard(board);
             return;
         }
 
@@ -23,6 +25,7 @@ public class Main {
             //Check for the first legal position
             if(posAvailable(col, row, board)){
                 //Update board
+                System.out.println("row:"+row+" col:"+col);
                 board[row] = col;
                 //Recursive call  (go to next row)
                 placeQueen(board, row+1);
@@ -32,20 +35,38 @@ public class Main {
 
     public static boolean posAvailable(int checkCol, int checkRow, int[] board){
 
-        int dif = checkRow-board.length;
+        //(checkCol, checkRow) cords for currently placed
+
+        int dexter = checkRow;
+        int sinister = checkRow;
         //We dont't need to check horizontally since we always switch row when we place a queen.
-        for (int i = 0; i < board.length; i++) {
-            //Find formula
-            boolean vertical = checkRow == i-x;
-            boolean diagonal = checkCol == board[i]-x && checkRow == i-x;
-            if(diagonal && vertical) return true;
+        for(int rowNum = 0; rowNum < board.length; rowNum++) {
+            for (int colNum = 0; colNum < board.length; colNum++) {
+                //We are on currently placed row
+                if(colNum == checkCol) break;
+
+                boolean dexterCheck = false;
+                boolean sinisterCheck = false;
+                boolean verticalCheck = board[rowNum] == checkCol;
+                //Checks if we are on a diagonal
+                //May remove --> " 0 <= checkCol-dexter && checkCol-dexter < board.length && "
+                if(colNum == checkCol-dexter) {
+                    dexterCheck = colNum == board[rowNum];
+                }
+                if(colNum == checkCol+sinister){
+                    sinisterCheck = colNum == board[rowNum];
+                }
+                if (dexterCheck || verticalCheck || sinisterCheck) return false;
+            }
+            dexter++;
+            sinister--;
         }
-        return false;
+        return true;
     }
 
-    public static void printBoard(){
-
-    }
+    public static void printBoard(int[] board){
+        System.out.println(Arrays.toString(board));
+  }
 }
 
 
